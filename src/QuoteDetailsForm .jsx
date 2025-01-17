@@ -89,35 +89,6 @@ const QuoteDetailsForm = () => {
 
         <form onSubmit={handleSubmit}>
           <label
-            htmlFor="jobOrder"
-            style={{
-              display: "block",
-              marginBottom: "10px",
-              color: "#fff",
-              fontWeight: "600",
-            }}
-          >
-            Job Order Number:
-          </label>
-          <input
-            type="text"
-            id="jobOrder"
-            value={job_order_number}
-            readOnly
-            style={{
-              width: "100%",
-              padding: "12px",
-              marginBottom: "20px",
-              borderRadius: "8px",
-              border: "none",
-              outline: "none",
-              background: "rgba(255, 255, 255, 0.2)",
-              color: "#fff",
-              fontSize: "16px",
-            }}
-          />
-
-          <label
             htmlFor="feedback"
             style={{
               display: "block",
