@@ -47,6 +47,10 @@ const QuoteDetailsForm = () => {
 
       {/* Display email */}
       <p>
+        <strong>job_order_number:</strong> {job_order_number || "Not provided"}
+      </p>
+
+      <p>
         <strong>Email:</strong> {email || "Not provided"}
       </p>
 
