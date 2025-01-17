@@ -3,23 +3,22 @@ import React, { useEffect, useState } from "react";
 const QuoteDetailsForm = () => {
   const [jobOrder, setJobOrder] = useState("");
   const [feedback, setFeedback] = useState("");
+  const [email, setEmail] = useState("");
 
-  // Extract URL parameters and populate job order number
+  // Extract URL parameters
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const jobOrderParam = urlParams.get("job_order");
-    if (jobOrderParam) {
-      setJobOrder(jobOrderParam);
-    }
+    setJobOrder(urlParams.get("job_order") || "");
+    setEmail(urlParams.get("email") || "");
   }, []);
 
-  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const data = {
       job_order: jobOrder,
       feedback,
+      email,
     };
 
     try {
@@ -31,9 +30,9 @@ const QuoteDetailsForm = () => {
 
       if (response.ok) {
         alert("Feedback submitted successfully!");
-        setFeedback(""); // Clear feedback after successful submission
+        setFeedback(""); // Clear the feedback field
       } else {
-        alert("Failed to submit feedback. Please try again later.");
+        alert("Failed to submit feedback. Please try again.");
       }
     } catch (error) {
       console.error("Error submitting feedback:", error);
@@ -44,9 +43,13 @@ const QuoteDetailsForm = () => {
   return (
     <div style={{ fontFamily: "Arial, sans-serif", margin: "20px" }}>
       <h1>Quote Details</h1>
+      <p>Fill out the form below to provide feedback or additional information.</p>
+
+      {/* Display email */}
       <p>
-        Fill out the form below to provide feedback or additional information.
+        <strong>Email:</strong> {email || "Not provided"}
       </p>
+
       <form
         onSubmit={handleSubmit}
         style={{
@@ -54,54 +57,19 @@ const QuoteDetailsForm = () => {
           margin: "auto",
         }}
       >
-        <label
-          htmlFor="jobOrder"
-          style={{ display: "block", marginBottom: "8px" }}
-        >
-          Job :
-        </label>
-        <input
-          type="text"
-          id="jobOrder"
-          value={jobOrder}
-          readOnly
-          style={{
-            width: "100%",
-            marginBottom: "16px",
-            padding: "8px",
-          }}
-        />
+        <label htmlFor="jobOrder">Job Order Number:</label>
+        <input type="text" id="jobOrder" value={jobOrder} readOnly />
 
-        <label
-          htmlFor="feedback"
-          style={{ display: "block", marginBottom: "8px" }}
-        >
-          Your :
-        </label>
+        <label htmlFor="feedback">Your Feedback:</label>
         <textarea
           id="feedback"
           value={feedback}
           onChange={(e) => setFeedback(e.target.value)}
           rows="4"
           required
-          style={{
-            width: "100%",
-            marginBottom: "16px",
-            padding: "8px",
-          }}
         ></textarea>
 
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "8px",
-            backgroundColor: "#007BFF",
-            color: "white",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
+        <button type="submit" style={{ marginTop: "16px" }}>
           Submit
         </button>
       </form>
