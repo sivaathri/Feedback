@@ -76,7 +76,7 @@ const QuoteDetailsForm = () => {
           htmlFor="feedback"
           style={{ display: "block", marginBottom: "8px" }}
         >
-          Your Feedback:
+          Your :
         </label>
         <textarea
           id="feedback"
