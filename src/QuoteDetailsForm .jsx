@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 
 const QuoteDetailsForm = () => {
-  const [jobOrder, setJobOrder] = useState("");
+  const [job_order_number, setjob_order_number] = useState("");
   const [feedback, setFeedback] = useState("");
   const [email, setEmail] = useState("");
 
   // Extract URL parameters
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    setJobOrder(urlParams.get("job_order") || "");
+    setjob_order_number(urlParams.get("job_order_number") || "");
     setEmail(urlParams.get("email") || "");
   }, []);
 
@@ -16,7 +16,7 @@ const QuoteDetailsForm = () => {
     event.preventDefault();
 
     const data = {
-      job_order: jobOrder,
+      job_order_number: job_order_number,
       feedback,
       email,
     };
@@ -58,7 +58,7 @@ const QuoteDetailsForm = () => {
         }}
       >
         <label htmlFor="jobOrder">Job Order Number:</label>
-        <input type="text" id="jobOrder" value={jobOrder} readOnly />
+        <input type="text" id="jobOrder" value={job_order_number} readOnly />
 
         <label htmlFor="feedback">Your Feedback:</label>
         <textarea
