@@ -41,42 +41,137 @@ const QuoteDetailsForm = () => {
   };
 
   return (
-    <div style={{ fontFamily: "Arial, sans-serif", margin: "20px" }}>
-      <h1>Quote Details</h1>
-      <p>Fill out the form below to provide feedback or additional information.</p>
-
-      {/* Display email */}
-      <p>
-        <strong>job_order_number:</strong> {job_order_number || "Not provided"}
-      </p>
-
-      <p>
-        <strong>Email:</strong> {email || "Not provided"}
-      </p>
-
-      <form
-        onSubmit={handleSubmit}
+    <div
+      style={{
+        fontFamily: "'Poppins', sans-serif",
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "linear-gradient(135deg, #4facfe, #00f2fe)",
+        padding: "20px",
+      }}
+    >
+      <div
         style={{
-          maxWidth: "400px",
-          margin: "auto",
+          background: "rgba(255, 255, 255, 0.3)",
+          backdropFilter: "blur(10px)",
+          borderRadius: "15px",
+          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
+          padding: "30px",
+          width: "90%",
+          maxWidth: "500px",
+          textAlign: "center",
         }}
       >
-        <label htmlFor="jobOrder">Job Order Number:</label>
-        <input type="text" id="jobOrder" value={job_order_number} readOnly />
+        <h1 style={{ color: "#fff", marginBottom: "20px" }}>Quote Details</h1>
+        <p style={{ color: "#f0f0f0", marginBottom: "30px" }}>
+          Fill out the form below to provide feedback or additional information.
+        </p>
 
-        <label htmlFor="feedback">Your Feedback:</label>
-        <textarea
-          id="feedback"
-          value={feedback}
-          onChange={(e) => setFeedback(e.target.value)}
-          rows="4"
-          required
-        ></textarea>
+        <div
+          style={{
+            background: "rgba(255, 255, 255, 0.2)",
+            padding: "15px",
+            borderRadius: "10px",
+            marginBottom: "20px",
+            color: "#fff",
+          }}
+        >
+          <p>
+            <strong>Job Order Number:</strong>{" "}
+            {job_order_number || "Not provided"}
+          </p>
+          <p>
+            <strong>Email:</strong> {email || "Not provided"}
+          </p>
+        </div>
 
-        <button type="submit" style={{ marginTop: "16px" }}>
-          Submit
-        </button>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <label
+            htmlFor="jobOrder"
+            style={{
+              display: "block",
+              marginBottom: "10px",
+              color: "#fff",
+              fontWeight: "600",
+            }}
+          >
+            Job Order Number:
+          </label>
+          <input
+            type="text"
+            id="jobOrder"
+            value={job_order_number}
+            readOnly
+            style={{
+              width: "100%",
+              padding: "12px",
+              marginBottom: "20px",
+              borderRadius: "8px",
+              border: "none",
+              outline: "none",
+              background: "rgba(255, 255, 255, 0.2)",
+              color: "#fff",
+              fontSize: "16px",
+            }}
+          />
+
+          <label
+            htmlFor="feedback"
+            style={{
+              display: "block",
+              marginBottom: "10px",
+              color: "#fff",
+              fontWeight: "600",
+            }}
+          >
+            Your Feedback:
+          </label>
+          <textarea
+            id="feedback"
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+            rows="4"
+            required
+            style={{
+              width: "100%",
+              padding: "12px",
+              borderRadius: "8px",
+              border: "none",
+              outline: "none",
+              background: "rgba(255, 255, 255, 0.2)",
+              color: "#fff",
+              fontSize: "16px",
+              marginBottom: "20px",
+            }}
+          ></textarea>
+
+          <button
+            type="submit"
+            style={{
+              width: "100%",
+              padding: "12px",
+              borderRadius: "8px",
+              border: "none",
+              background: "linear-gradient(135deg, #5b86e5, #36d1dc)",
+              color: "#fff",
+              fontSize: "18px",
+              fontWeight: "600",
+              cursor: "pointer",
+              transition: "transform 0.2s ease, background 0.3s ease",
+            }}
+            onMouseOver={(e) => {
+              e.target.style.transform = "scale(1.05)";
+            }}
+            onMouseOut={(e) => {
+              e.target.style.transform = "scale(1)";
+            }}
+          >
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
