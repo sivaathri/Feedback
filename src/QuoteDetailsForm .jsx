@@ -58,7 +58,7 @@ const QuoteDetailsForm = () => {
           htmlFor="jobOrder"
           style={{ display: "block", marginBottom: "8px" }}
         >
-          Job Order Number:
+          Job :
         </label>
         <input
           type="text"
