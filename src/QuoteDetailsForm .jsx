@@ -105,7 +105,7 @@ const QuoteDetailsForm = () => {
           <div className="text-center">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Quote Details</h1>
             <p className="text-gray-600">
-            View the File and Provide your Feedback
+            View the File and provide your feedback
             </p>
           </div>
 
