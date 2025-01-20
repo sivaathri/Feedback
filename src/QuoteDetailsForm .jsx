@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react";
 const QuoteDetailsForm = () => {
   const [job_order_number, setjob_order_number] = useState("");
   const [feedback, setFeedback] = useState("");
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
 
   // Extract URL parameters
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     setjob_order_number(urlParams.get("job_order_number") || "");
-    setEmail(urlParams.get("email") || "");
+  
   }, []);
 
   const handleSubmit = async (event) => {
@@ -18,7 +18,7 @@ const QuoteDetailsForm = () => {
     const data = {
       job_order_number: job_order_number,
       feedback,
-      email,
+
     };
 
     try {
@@ -82,9 +82,7 @@ const QuoteDetailsForm = () => {
             <strong>Job Order Number:</strong>{" "}
             {job_order_number || "Not provided"}
           </p>
-          <p>
-            <strong>Email:</strong> {email || "Not provided"}
-          </p>
+        
         </div>
 
         <form onSubmit={handleSubmit}>
