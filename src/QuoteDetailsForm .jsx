@@ -47,28 +47,37 @@ const QuoteDetailsForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+  
     const data = { job_order_number, feedback, status };
-
+  
     try {
-      const response = await fetch("/api/submit-feedback", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
+      const response = await fetch(
+        `http://localhost:3000/api/quote/updateQuoteStatus/${job_order_number}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Move inside the headers object
+          },
+          body: JSON.stringify(data), // Send the data payload
+        }
+      );
+  
       if (response.ok) {
         alert("Feedback submitted successfully!");
-        setFeedback("");
-        setStatus("");
-        setIsFileViewed(false); // Reset file viewed state after submission
+        setFeedback(""); // Clear the feedback input
+        setStatus(""); // Clear the status input
+        setIsFileViewed(false); // Reset file viewed state
       } else {
-        alert("Failed to submit feedback. Please try again.");
+        const errorData = await response.json(); // Parse the error response
+        alert(`Failed to submit feedback. Error: ${errorData.message || "Unknown error"}`);
       }
     } catch (error) {
       console.error("Error submitting feedback:", error);
       alert("An error occurred. Please try again.");
     }
   };
+  
 
   const handleView = () => {
     fetch(`http://localhost:3000/api/quote/view-file/${job_order_number}`, {
@@ -103,9 +112,11 @@ const QuoteDetailsForm = () => {
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg">
         <div className="p-8">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Quote Details</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              Quote Details
+            </h1>
             <p className="text-gray-600">
-            View the File and provide your feedback
+              View the File and provide your feedback
             </p>
           </div>
 
@@ -132,9 +143,10 @@ const QuoteDetailsForm = () => {
                     <label
                       key={option.value}
                       className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200
-                        ${status === option.value
-                          ? `${option.bgColor} ring-2 ${option.ringColor} shadow-sm`
-                          : "bg-white hover:bg-gray-50 border border-gray-200"
+                        ${
+                          status === option.value
+                            ? `${option.bgColor} ring-2 ${option.ringColor} shadow-sm`
+                            : "bg-white hover:bg-gray-50 border border-gray-200"
                         }`}
                     >
                       <input
@@ -148,16 +160,18 @@ const QuoteDetailsForm = () => {
                       />
                       <option.icon
                         className={`w-5 h-5 
-                          ${status === option.value
-                            ? option.iconColor
-                            : "text-gray-400"
+                          ${
+                            status === option.value
+                              ? option.iconColor
+                              : "text-gray-400"
                           }`}
                       />
                       <span
                         className={`text-sm font-medium 
-                          ${status === option.value
-                            ? option.textColor
-                            : "text-gray-600"
+                          ${
+                            status === option.value
+                              ? option.textColor
+                              : "text-gray-600"
                           }`}
                       >
                         {option.value}
@@ -190,9 +204,10 @@ const QuoteDetailsForm = () => {
                 type="submit"
                 disabled={!isFileViewed} // Disable submit if file is not viewed
                 className={`w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-colors duration-200
-                  ${isFileViewed
-                    ? "bg-green-600 text-white hover:bg-green-700 focus:ring-green-500"
-                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  ${
+                    isFileViewed
+                      ? "bg-green-600 text-white hover:bg-green-700 focus:ring-green-500"
+                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
                   }`}
               >
                 <Send className="w-4 h-4" />
@@ -207,7 +222,9 @@ const QuoteDetailsForm = () => {
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col">
             <div className="flex items-center justify-between p-4 border-b">
-              <h2 className="text-xl font-semibold text-gray-900">File Viewer</h2>
+              <h2 className="text-xl font-semibold text-gray-900">
+                File Viewer
+              </h2>
               <button
                 onClick={closePopup}
                 className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
