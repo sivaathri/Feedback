@@ -54,7 +54,7 @@ const QuoteDetailsForm = () => {
       const response = await fetch(
         `http://localhost:3000/api/quote/updateQuoteStatus/${job_order_number}`,
         {
-          method: "POST",
+          method: "put",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`, // Move inside the headers object
