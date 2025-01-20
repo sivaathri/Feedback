@@ -113,7 +113,7 @@ const QuoteDetailsForm = () => {
           </p>
           <p>Click below to view the attached file:</p>
         </div>
-<h1>hello</h1>
+        <h1>hello</h1>
         <button
           className="bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg shadow-lg hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-red-300 transition-all duration-300"
           onClick={handleView}
