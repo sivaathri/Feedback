@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Eye, Send, X } from "lucide-react";
 
 const QuoteDetailsForm = () => {
   const [job_order_number, setjob_order_number] = useState("");
   const [feedback, setFeedback] = useState("");
   const [viewFileURL, setViewFileURL] = useState(null);
-  const [token,settoken] = useState("");
+  const [token, settoken] = useState("");
 
- console.log('token',token)
-
-  // Extract URL parameters
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     setjob_order_number(urlParams.get("job_order_number") || "");
@@ -17,11 +15,7 @@ const QuoteDetailsForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const data = {
-      job_order_number: job_order_number,
-      feedback,
-    };
+    const data = { job_order_number, feedback };
 
     try {
       const response = await fetch("/api/submit-feedback", {
@@ -32,7 +26,7 @@ const QuoteDetailsForm = () => {
 
       if (response.ok) {
         alert("Feedback submitted successfully!");
-        setFeedback(""); // Clear the feedback field
+        setFeedback("");
       } else {
         alert("Failed to submit feedback. Please try again.");
       }
@@ -53,7 +47,7 @@ const QuoteDetailsForm = () => {
         if (response.ok) {
           const blob = await response.blob();
           const url = window.URL.createObjectURL(blob);
-          setViewFileURL(url); // Set the file URL to display in the popup
+          setViewFileURL(url);
         } else {
           alert("Failed to fetch the file.");
         }
@@ -70,142 +64,86 @@ const QuoteDetailsForm = () => {
   };
 
   return (
-    <div
-      style={{
-        fontFamily: "'Poppins', sans-serif",
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "linear-gradient(135deg, #4facfe, #00f2fe)",
-        padding: "20px",
-      }}
-    >
-      <div
-        style={{
-          background: "rgba(255, 255, 255, 0.3)",
-          backdropFilter: "blur(10px)",
-          borderRadius: "20px",
-          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
-          padding: "30px",
-          width: "90%",
-          maxWidth: "600px",
-          textAlign: "center",
-        }}
-      >
-        <h1 style={{ color: "#fff", marginBottom: "20px" }}>Quote Details</h1>
-        <p style={{ color: "#f0f0f0", marginBottom: "30px" }}>
-          Fill out the form below to provide feedback or additional information.
-        </p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg">
+        <div className="p-8">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Quote Details</h1>
+            <p className="text-gray-600">
+              Fill out the form below to provide feedback or additional information.
+            </p>
+          </div>
 
-        <div
-          style={{
-            background: "rgba(255, 255, 255, 0.2)",
-            padding: "15px",
-            borderRadius: "10px",
-            marginBottom: "20px",
-            color: "#fff",
-            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          <p>
-            <strong>Job Order Number:</strong>{" "}
-            {job_order_number || "Not provided"}
-          </p>
-          <p>Click below to view the attached file:</p>
+          <div className="mt-8 space-y-6">
+            <div className="bg-blue-50 rounded-xl p-6 border border-blue-100">
+              <div className="flex items-center justify-between flex-wrap gap-4">
+                <div>
+                  <p className="text-sm font-medium text-blue-600">Job Order Number</p>
+                  <p className="text-lg font-semibold text-gray-900">
+                    {job_order_number || "Not provided"}
+                  </p>
+                </div>
+                <button
+                  onClick={handleView}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                >
+                  <Eye className="w-4 h-4" />
+                  View File
+                </button>
+              </div>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label
+                  htmlFor="feedback"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  Your Feedback
+                </label>
+                <textarea
+                  id="feedback"
+                  value={feedback}
+                  onChange={(e) => setFeedback(e.target.value)}
+                  rows="4"
+                  required
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 resize-none"
+                  placeholder="Enter your feedback here..."
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+              >
+                <Send className="w-4 h-4" />
+                Submit Feedback
+              </button>
+            </form>
+          </div>
         </div>
-        <h1>h</h1>
-        <button
-          className="bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg shadow-lg hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-red-300 transition-all duration-300"
-          onClick={handleView}
-          style={{
-            borderRadius: "12px",
-            background: "linear-gradient(45deg, #6a11cb, #2575fc)",
-            padding: "12px 24px",
-            fontSize: "16px",
-            transition: "transform 0.2s ease, background 0.3s ease",
-          }}
-        >
-          View File
-        </button>
+      </div>// tailwind.config.js
 
-        <form onSubmit={handleSubmit} style={{ marginTop: "30px" }}>
-          <label
-            htmlFor="feedback"
-            style={{
-              display: "block",
-              marginBottom: "10px",
-              color: "#fff",
-              fontWeight: "600",
-              fontSize: "16px",
-            }}
-          >
-            Your Feedback:
-          </label>
-          <textarea
-            id="feedback"
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
-            rows="4"
-            required
-            style={{
-              width: "100%",
-              padding: "12px",
-              borderRadius: "8px",
-              border: "none",
-              outline: "none",
-              background: "rgba(255, 255, 255, 0.2)",
-              color: "#fff",
-              fontSize: "16px",
-              marginBottom: "20px",
-              boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-            }}
-          ></textarea>
 
-          <button
-            type="submit"
-            style={{
-              width: "100%",
-              padding: "14px",
-              borderRadius: "8px",
-              border: "none",
-              background: "linear-gradient(135deg, #5b86e5, #36d1dc)",
-              color: "#fff",
-              fontSize: "18px",
-              fontWeight: "600",
-              cursor: "pointer",
-              transition: "transform 0.2s ease, background 0.3s ease",
-            }}
-            onMouseOver={(e) => {
-              e.target.style.transform = "scale(1.05)";
-            }}
-            onMouseOut={(e) => {
-              e.target.style.transform = "scale(1)";
-            }}
-          >
-            Submit
-          </button>
-        </form>
-      </div>
-
-      {/* Popup for file viewing */}
       {viewFileURL && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-4xl transition-transform transform-gpu ease-in-out duration-300">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold">File Viewer</h2>
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col">
+            <div className="flex items-center justify-between p-4 border-b">
+              <h2 className="text-xl font-semibold text-gray-900">File Viewer</h2>
               <button
                 onClick={closePopup}
-                className="text-gray-500 hover:text-red-600 focus:outline-none transition duration-200"
+                className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
               >
-                ✖
+                <X className="w-5 h-5" />
               </button>
             </div>
-            <iframe
-              src={viewFileURL}
-              title="File Viewer"
-              className="w-full h-[calc(100vh-100px)] sm:h-[calc(100vh-150px)] md:h-[calc(100vh-200px)] border rounded-lg"
-            ></iframe>
+            <div className="flex-1 min-h-0 p-4">
+              <iframe
+                src={viewFileURL}
+                title="File Viewer"
+                className="w-full h-full rounded-xl border border-gray-200"
+              />
+            </div>
           </div>
         </div>
       )}
