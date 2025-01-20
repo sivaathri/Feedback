@@ -83,7 +83,7 @@ const QuoteDetailsForm = () => {
             <strong>Job Order Number:</strong>{" "}
             {job_order_number || "Not provided"}
           </p>
-        
+          <p>Click below to view the attached file:</p>
         </div>
         {file && (
         <div>
