@@ -8,7 +8,7 @@ const QuoteDetailsForm = () => {
   const [viewFileURL, setViewFileURL] = useState(null);
   const [token, settoken] = useState("");
   const [isFileViewed, setIsFileViewed] = useState(false); // Track if the file is viewed
-
+  console.log("job_order_number", job_order_number);
   const statusOptions = [
     {
       value: "Approved",
@@ -47,9 +47,9 @@ const QuoteDetailsForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     const data = { job_order_number, feedback, status };
-  
+
     try {
       const response = await fetch(
         `http://localhost:3000/api/quote/updateQuoteStatus/${job_order_number}`,
@@ -62,7 +62,7 @@ const QuoteDetailsForm = () => {
           body: JSON.stringify(data), // Send the data payload
         }
       );
-  
+
       if (response.ok) {
         alert("Feedback submitted successfully!");
         setFeedback(""); // Clear the feedback input
@@ -70,14 +70,17 @@ const QuoteDetailsForm = () => {
         setIsFileViewed(false); // Reset file viewed state
       } else {
         const errorData = await response.json(); // Parse the error response
-        alert(`Failed to submit feedback. Error: ${errorData.message || "Unknown error"}`);
+        alert(
+          `Failed to submit feedback. Error: ${
+            errorData.message || "Unknown error"
+          }`
+        );
       }
     } catch (error) {
       console.error("Error submitting feedback:", error);
       alert("An error occurred. Please try again.");
     }
   };
-  
 
   const handleView = () => {
     fetch(`http://localhost:3000/api/quote/view-file/${job_order_number}`, {
