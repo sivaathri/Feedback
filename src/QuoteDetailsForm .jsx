@@ -4,14 +4,15 @@ const QuoteDetailsForm = () => {
   const [job_order_number, setjob_order_number] = useState("");
   const [feedback, setFeedback] = useState("");
   const [viewFileURL, setViewFileURL] = useState(null);
+  const [token,settoken] = useState("");
 
-  const apiToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcklkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzM3MzU1MzY2LCJleHAiOjE3MzczOTg1NjZ9.MsdlNnFtsMnzphOan-bo9id7qSrdvfY5GlBXWmzxak4";
+ 
 
   // Extract URL parameters
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     setjob_order_number(urlParams.get("job_order_number") || "");
+    settoken(urlParams.get("token") || "");
   }, []);
 
   const handleSubmit = async (event) => {
@@ -45,7 +46,7 @@ const QuoteDetailsForm = () => {
     fetch(`http://localhost:3000/api/quote/view-file/${job_order_number}`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${apiToken}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then(async (response) => {
