@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 const QuoteDetailsForm = () => {
   const [job_order_number, setjob_order_number] = useState("");
   const [feedback, setFeedback] = useState("");
+  const [file, setFile] = useState("");
   // const [email, setEmail] = useState("");
 
   // Extract URL parameters
@@ -84,7 +85,14 @@ const QuoteDetailsForm = () => {
           </p>
         
         </div>
-
+        {file && (
+        <div>
+          <p>Click below to view the attached file:</p>
+          <a href={`http://localhost:3000//quote/view-file/${job_order_number}`} target="_blank" rel="noopener noreferrer">
+            View File
+          </a>
+        </div>
+      )}
         <form onSubmit={handleSubmit}>
           <label
             htmlFor="feedback"
